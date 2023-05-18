@@ -27,7 +27,6 @@
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <None Remove="Dtos\User\" />
     <None Remove="Swashbuckle.AspNetCore.Filters" />
-    <None Remove="Dtos\Email\" />
     <None Remove="Services\EmailService\" />
     <None Remove="MailKit" />
   </ItemGroup>
@@ -60,7 +59,6 @@
     <Folder Include="Dtos\Appointment\" />
     <Folder Include="Services\AppointmentService\" />
     <Folder Include="Dtos\User\" />
-    <Folder Include="Dtos\Email\" />
     <Folder Include="Services\EmailService\" />
   </ItemGroup>
 </Project>

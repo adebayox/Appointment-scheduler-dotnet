@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +26,7 @@ namespace Scheduler.Data
         {
             var response = new ServiceResponse<string>();
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Username.ToLower().Equals(userlogin.Username.ToLower()));
+                .FirstOrDefaultAsync(u => u.Email.ToLower().Equals(userlogin.Email.ToLower()));
             if(user is null)
             {
                 response.Success = false;
@@ -47,7 +48,7 @@ namespace Scheduler.Data
         public async Task<ServiceResponse<int>> Register(UserRegisterDto user)
         {
             var response = new ServiceResponse<int>();
-            if(await UserExists(user.Username))
+            if(await UserExists(user.Email))
             {
                 response.Success = false;
                 response.Message = "User already exists.";
@@ -67,9 +68,11 @@ namespace Scheduler.Data
             return response;
         }
 
-        public async Task<bool> UserExists(string username)
+
+
+        public async Task<bool> UserExists(string email)
         {
-            if(await _context.Users.AnyAsync(u => u.Username.ToLower()== username.ToLower()))
+            if(await _context.Users.AnyAsync(u => u.Email.ToLower()== email.ToLower()))
             {
                 return true;
             }
@@ -99,7 +102,7 @@ namespace Scheduler.Data
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
+                //new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email)
             };
 
@@ -127,6 +130,55 @@ namespace Scheduler.Data
             
         }
 
+        public async Task<ServiceResponse<string>> ForgotPassword(string email)
+        {
+            var response = new ServiceResponse<string>();
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "User not found.";
+                return response;
+            }
+
+            user.PasswordResetToken = CreateRandomToken();
+            user.ResetTokenExpires = DateTime.Now.AddDays(1);
+            await _context.SaveChangesAsync();
+
+            response.Success = true;
+            response.Message = "You may now reset your password.";
+            return response;
+        }
+
+        private string CreateRandomToken()
+        {
+            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+        }
+
+        public async Task<ServiceResponse<string>> ResetPassword(ResetPasswordDto request)
+        {
+            var response = new ServiceResponse<string>();
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.PasswordResetToken == request.Token);
+            if (user == null || user.ResetTokenExpires < DateTime.Now)
+            {
+                response.Success = false;
+                response.Message = "Invalid Token.";
+                return response;
+            }
+
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.PasswordResetToken = null;
+            user.ResetTokenExpires = null;
+
+            await _context.SaveChangesAsync();
+
+            response.Success = true;
+            response.Message = "Password reset successfull.";
+            return response;
+        }
     }
 }
 

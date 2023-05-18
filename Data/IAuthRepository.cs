@@ -9,7 +9,11 @@ namespace Scheduler.Data
 
 		Task<ServiceResponse<string>> Login(UserLoginDto user);
 
-		Task<bool> UserExists(string username);
+        Task<ServiceResponse<string>> ForgotPassword(string email);
+
+        Task<ServiceResponse<string>> ResetPassword(ResetPasswordDto user);
+
+        Task<bool> UserExists(string username);
 	}
 }
 
