@@ -44,9 +44,9 @@ Returns: Confirmation message and the registered user details.
 
 ``` 
 {
-  "email": "temiloluwa@gmail.com",
-  "password": "loludayo",
-  "confirmPassword": "loludayo"
+  "email": "test@example.com",
+  "password": "password",
+  "confirmPassword": "password"
 }
 ```
 
@@ -62,8 +62,8 @@ Parameters: Request body containing user login credentials.
 Returns: Access token and user details upon successful login.
 ```
 {
-  "email": "temiloluwa@gmail.com",
-  "password": "loludayo"
+  "email": "test@example.com",
+  "password": "password",
 }
 ```
 
@@ -90,8 +90,8 @@ Parameters: Request body containing the appointment details.
 Returns: Confirmation message and the created appointment details.
 ```
 {
-  "title": "hacker notes",
-  "description": "cyber security",
+  "title": "Computer science exam",
+  "description": "cyber security course in big lecture theatre",
   "createdAt": "2023-05-18T13:50:19.935Z",
   "appointmentTime": "2023-05-18T13:50:19.935Z"
 }
@@ -99,7 +99,7 @@ Returns: Confirmation message and the created appointment details.
 
 ## GET http://localhost:5049/api/Appointment/{id}
 ```
-http://localhost:5049/api/Appointment/5
+http://localhost:5049/api/Appointment/{id}
 ```
 
 Description: Retrieves details of a specific appointment.
@@ -123,7 +123,7 @@ Returns: Confirmation message and the updated appointment details.
 {
     "appointmentId": 5,
   "title": "hacker in darkweb",
-  "description": "cyber security",
+  "description": "cyber security course in big lecture theatre",
   "createdAt": "2023-05-18T13:50:19.935Z",
   "appointmentTime": "2023-05-18T13:50:19.935Z"
 }
@@ -131,7 +131,7 @@ Returns: Confirmation message and the updated appointment details.
 
 ## DELETE http://localhost:5049/api/Appointment/{id}
 ```
-http://localhost:5049/api/Appointment/5
+http://localhost:5049/api/Appointment/{id}
 ```
 
 Description: Deletes a specific appointment.
@@ -143,7 +143,7 @@ Returns: Confirmation message indicating whether the deletion was successful.
 
 ## POST http://localhost:5049/Auth/ForgotPassword
 ```
-http://localhost:5049/Auth/ForgotPassword?email=temiloluwa@gmail.com
+http://localhost:5049/Auth/ForgotPassword?email=test@example.com
 ```
 
 Description: Initiates the password reset process for a user.
@@ -165,8 +165,8 @@ Returns: Confirmation message indicating whether the password reset was successf
 ```
 {
   "token": "6D45AF55AFF0381633C93815EFC1FF169D797BFA1DBB98657483DA296AEFBEB8719841585B4971EA9B5ADAC61524FB70982A166674C2FC6DA61B5DEAE57C12DA",
-  "password": "loludayo0",
-  "confirmPassword": "loludayo0"
+  "password": "newpassword",
+  "confirmPassword": "newpassword"
 }
 ```
     
