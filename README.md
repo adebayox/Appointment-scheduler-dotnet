@@ -31,9 +31,9 @@ The Authentication API endpoints allow users to register, login, and manage thei
 
 Please refer to the individual API endpoints for more detailed information on their usage, request parameters, and response formats.
 
-## POST http://localhost:5049/Auth/Register
+## POST http://localhost:5149/Auth/Register
 ```
-http://localhost:5049/Auth/Register
+http://localhost:5149/Auth/Register
 ```
 
 Description: Registers a new user.
@@ -50,9 +50,9 @@ Returns: Confirmation message and the registered user details.
 }
 ```
 
-## POST http://localhost:5049/Auth/Login
+## POST http://localhost:5149/Auth/Login
 ``` 
-http://localhost:5049/Auth/Login
+http://localhost:5149/Auth/Login
 ```
 
 Description: Authenticates a user and generates an access token.
@@ -67,9 +67,9 @@ Returns: Access token and user details upon successful login.
 }
 ```
 
-## GET http://localhost:5049/api/Appointment/GetAll
+## GET http://localhost:5149/api/Appointment/GetAll
 ```
-http://localhost:5049/api/Appointment/GetAll
+http://localhost:5149/api/Appointment/GetAll
 ```
 
 Description: Retrieves all appointments.
@@ -78,9 +78,9 @@ Parameters: None.
 
 Returns: A list of all appointments.
 
-## POST http://localhost:5049/api/Appointment
+## POST http://localhost:5149/api/Appointment
 ```
-http://localhost:5049/api/Appointment
+http://localhost:5149/api/Appointment
 ```
 
 Description: Creates a new appointment.
@@ -97,9 +97,9 @@ Returns: Confirmation message and the created appointment details.
 }
 ```
 
-## GET http://localhost:5049/api/Appointment/{id}
+## GET http://localhost:5149/api/Appointment/{id}
 ```
-http://localhost:5049/api/Appointment/{id}
+http://localhost:5149/api/Appointment/{id}
 ```
 
 Description: Retrieves details of a specific appointment.
@@ -109,9 +109,9 @@ id (path parameter) - The ID of the appointment to retrieve.
 
 Returns: Details of the requested appointment.
 
-## PUT http://localhost:5049/api/Appointment
+## PUT http://localhost:5149/api/Appointment
 ```
-http://localhost:5049/api/Appointment
+http://localhost:5149/api/Appointment
 ```
 
 Description: Updates an existing appointment.
@@ -129,7 +129,7 @@ Returns: Confirmation message and the updated appointment details.
 }
 ```
 
-## DELETE http://localhost:5049/api/Appointment/{id}
+## DELETE http://localhost:5149/api/Appointment/{id}
 ```
 http://localhost:5049/api/Appointment/{id}
 ```
@@ -141,9 +141,9 @@ id (path parameter) - The ID of the appointment to be deleted.
 
 Returns: Confirmation message indicating whether the deletion was successful.
 
-## POST http://localhost:5049/Auth/ForgotPassword
+## POST http://localhost:5149/Auth/ForgotPassword
 ```
-http://localhost:5049/Auth/ForgotPassword?email=test@example.com
+http://localhost:5149/Auth/ForgotPassword?email=test@example.com
 ```
 
 Description: Initiates the password reset process for a user.
@@ -152,9 +152,9 @@ Parameters: Request body containing the user's email address.
 
 Returns: Confirmation message and instructions for resetting the password.
 
-## POST http://localhost:5049/Auth/ResetPassword
+## POST http://localhost:5149/Auth/ResetPassword
 ```
-http://localhost:5049/Auth/ResetPassword
+http://localhost:5149/Auth/ResetPassword
 ```
 
 Description: Resets the password for a user.
