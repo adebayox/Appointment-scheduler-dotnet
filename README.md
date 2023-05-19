@@ -25,6 +25,7 @@ The Authentication API endpoints allow users to register, login, and manage thei
 - **POST /Auth/Login**: Authenticate a user and generate an access token.
 - **POST /Auth/ForgotPassword**: Initiate the password reset process for a user.
 - **POST /Auth/ResetPassword**: Reset the password for a user.
+- - **GET /api/Appointment/recent-appointments**: Retrieve top 5 recent appointments.
     
 
 ---
