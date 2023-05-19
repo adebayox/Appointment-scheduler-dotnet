@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Scheduler.Authentication;
 using Scheduler.Dtos.Appointment;
 using Scheduler.Dtos.User;
+using Scheduler.Migrations;
 using Scheduler.Model;
 using Scheduler.Models;
 
@@ -43,6 +44,7 @@ namespace Scheduler.Services.AppointmentService
         public object Appointments => throw new NotImplementedException();
 
         public async Task<ServiceResponse<List<GetAppointmentDto>>> AddAppointment(AddAppointmentDto newAppointment)
+
         {
 			var serviceResponse = new ServiceResponse<List<GetAppointmentDto>>();
             var appointment = _mapper.Map<Appointment>(newAppointment);
@@ -142,9 +144,25 @@ namespace Scheduler.Services.AppointmentService
                 return serviceResponse;
             }
 
+        public async Task<ServiceResponse<List<GetAppointmentDto>>> GetRecentAppointments()
+        {
+            var serviceResponse = new ServiceResponse<List<GetAppointmentDto>>();
+            var userId = GetUserId();
+            var userEmail = GetEmail();
+
+                serviceResponse.Data = await _context.Appointments
+            .Where(c => c.User!.Id == userId)
+            .OrderByDescending(c => c.AppointmentId)
+            .Take(5) // Retrieve only the last 5 appointments
+            .Select(c => _mapper.Map<GetAppointmentDto>(c))
+            .ToListAsync();
+
+            return serviceResponse;
+        }
+
 
     }
-            }
+}
 
 
 

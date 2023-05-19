@@ -1,7 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using Scheduler.Data;
 using Scheduler.Dtos.User;
+using Scheduler.Models;
 
 namespace Scheduler.Controllers
 {
@@ -65,6 +68,8 @@ namespace Scheduler.Controllers
 
             return Ok(response);
         }
+
+
 
     }
 }

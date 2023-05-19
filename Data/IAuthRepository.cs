@@ -14,6 +14,8 @@ namespace Scheduler.Data
         Task<ServiceResponse<string>> ResetPassword(ResetPasswordDto user);
 
         Task<bool> UserExists(string username);
-	}
+
+
+    }
 }
 

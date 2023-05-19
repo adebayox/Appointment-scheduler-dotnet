@@ -2,7 +2,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scheduler.Authentication;
@@ -14,7 +16,7 @@ namespace Scheduler.Data
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
-        private readonly IMapper  _mapper;
+        private readonly IMapper _mapper;
 
         public AuthRepository(ApplicationDbContext context, IConfiguration configuration, IMapper mapper)
         {
@@ -22,17 +24,18 @@ namespace Scheduler.Data
             _configuration = configuration;
             _mapper = mapper;
         }
+
         public async Task<ServiceResponse<string>> Login(UserLoginDto userlogin)
         {
             var response = new ServiceResponse<string>();
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Email.ToLower().Equals(userlogin.Email.ToLower()));
-            if(user is null)
+            if (user is null)
             {
                 response.Success = false;
                 response.Message = "User not found.";
             }
-            else if(!VerifyPasswordHash(userlogin.Password, user.PasswordHash, user.PasswordSalt))
+            else if (!VerifyPasswordHash(userlogin.Password, user.PasswordHash, user.PasswordSalt))
             {
                 response.Success = false;
                 response.Message = "Wrong password.";
@@ -48,7 +51,7 @@ namespace Scheduler.Data
         public async Task<ServiceResponse<int>> Register(UserRegisterDto user)
         {
             var response = new ServiceResponse<int>();
-            if(await UserExists(user.Email))
+            if (await UserExists(user.Email))
             {
                 response.Success = false;
                 response.Message = "User already exists.";
@@ -63,7 +66,7 @@ namespace Scheduler.Data
 
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
-            
+
             response.Data = newUser.Id;
             return response;
         }
@@ -72,7 +75,7 @@ namespace Scheduler.Data
 
         public async Task<bool> UserExists(string email)
         {
-            if(await _context.Users.AnyAsync(u => u.Email.ToLower()== email.ToLower()))
+            if (await _context.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower()))
             {
                 return true;
             }
@@ -81,7 +84,7 @@ namespace Scheduler.Data
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using(var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
@@ -90,7 +93,7 @@ namespace Scheduler.Data
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            using(var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return computedHash.SequenceEqual(passwordHash);
@@ -127,7 +130,7 @@ namespace Scheduler.Data
 
             return tokenHandler.WriteToken(token);
 
-            
+
         }
 
         public async Task<ServiceResponse<string>> ForgotPassword(string email)
@@ -179,6 +182,9 @@ namespace Scheduler.Data
             response.Message = "Password reset successfull.";
             return response;
         }
+
+
+
     }
 }
 

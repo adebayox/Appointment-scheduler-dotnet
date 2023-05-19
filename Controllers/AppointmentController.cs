@@ -64,5 +64,16 @@ namespace Scheduler.Controllers
             }
             return Ok(response);
         }
+
+        [HttpGet("recent-appointments")]
+        public async Task<ActionResult<ServiceResponse<List<GetAppointmentDto>>>> GetRecentAppointments()
+        {
+            // Call the GetRecentAppointments method from the service
+            var serviceResponse = await _appointmentService.GetRecentAppointments();
+
+            // Return the response
+            return Ok(serviceResponse);
+        }
+
     }
 }

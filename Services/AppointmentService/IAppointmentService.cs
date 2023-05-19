@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using Scheduler.Dtos.Appointment;
 
 namespace Scheduler.Services.AppointmentService
@@ -12,6 +13,9 @@ namespace Scheduler.Services.AppointmentService
 		Task<ServiceResponse<GetAppointmentDto>> GetAppointmentById(int appointmentid);
 
         Task<ServiceResponse<List<GetAppointmentDto>>> AddAppointment(AddAppointmentDto newAppointment);
+
+        Task<ServiceResponse<List<GetAppointmentDto>>> GetRecentAppointments();
+
 
         Task<ServiceResponse<GetAppointmentDto>> UpdateAppointment(UpdateAppointmentDto updatedAppointment);
 

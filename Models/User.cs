@@ -1,10 +1,11 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Scheduler.Model;
 
 namespace Scheduler.Models
 {
-	public class User
-	{
+	public class User : IdentityUser<int>
+    {
 		public int Id { get; set; }
 
 		public string Email { get; set; } = string.Empty;
@@ -22,6 +23,6 @@ namespace Scheduler.Models
         public DateTime? ResetTokenExpires { get; set; }
 
         public List<Appointment>? Appointments { get; set; }
-	}
+    }
 }
 
