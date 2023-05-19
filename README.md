@@ -169,4 +169,12 @@ Returns: Confirmation message indicating whether the password reset was successf
   "confirmPassword": "newpassword"
 }
 ```
+
+## GET http://localhost:5149/api/Appointment/recent-appointments
+```
+http://localhost:5149/api/Appointment/recent-appointments
+```
+Description: Fetches the list of recent appointments, providing the most recently scheduled appointments.
+Parameters: None.
+Returns: Returns a collection of the most recent appointments, sorted by their scheduling time.
     
